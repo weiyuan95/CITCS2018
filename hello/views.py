@@ -48,3 +48,6 @@ def testing_post(request):
         return HttpResponse(request.POST)
 
     return HttpResponse("No post request received.")
+
+# https://docs.djangoproject.com/en/2.1/ref/request-response/#httpresponse-objects
+# for eg. return HttpResponseNotFound(...)
