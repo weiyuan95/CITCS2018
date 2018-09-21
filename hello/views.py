@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import json
 
 from .models import Greeting
+
 
 # Create your views here.
 def index(request):
@@ -22,4 +24,8 @@ def db(request):
 # TEST CODE BELOW:
 def test(request):
     return HttpResponse("Waow")
+
+
+def test2(request):
+    return HttpResponse(json.dumps({"lol": "wow"}))
 
