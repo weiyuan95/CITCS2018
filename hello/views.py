@@ -41,7 +41,6 @@ def testing_post(request):
 def squares(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        print(data)
 
         return JsonResponse(data["input"] ** 2, safe=False)
 
