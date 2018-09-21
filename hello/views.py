@@ -18,3 +18,8 @@ def db(request):
 
     return render(request, 'db.html', {'greetings': greetings})
 
+
+# TEST CODE BELOW:
+def test(request):
+    return HttpResponse("Waow")
+
