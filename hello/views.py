@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
 import json
 
 from .models import Greeting
@@ -22,10 +24,12 @@ def db(request):
 
 
 # TEST CODE BELOW:
+@csrf_exempt
 def test(request):
     return HttpResponse("Waow")
 
 
+@csrf_exempt
 def test2(request):
     return HttpResponse(json.dumps({"lol": "wow"}))
 
