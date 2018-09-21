@@ -12,10 +12,6 @@ import hello.views
 
 urlpatterns = [
     url(r'^$', hello.views.index, name='index'),
-    url(r'^test$', hello.views.test, name='test'),
-    url(r"^test2$", hello.views.test2, name="test2"),
-    url(r"^testing_get", hello.views.testing_get, name="testing"),
-    url(r"^testing_post", hello.views.testing_post, name="testing"),
     url(r"^square$", hello.views.squares, name="squares"),
     path('admin/', admin.site.urls),
 ]
