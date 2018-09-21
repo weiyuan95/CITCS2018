@@ -2,6 +2,7 @@
 import os
 import sys
 
+# If there are errors... https://docs.djangoproject.com/en/2.1/topics/settings/
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 
