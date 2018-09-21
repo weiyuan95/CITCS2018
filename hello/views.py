@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 import json
@@ -35,6 +35,15 @@ def testing_post(request):
         return HttpResponse(request.POST)
 
     return HttpResponse("No post request received.")
+
+
+@csrf_exempt
+def squares(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print(data)
+
+        return JsonResponse(data["input"] ** 2, safe=False)
 
 # https://docs.djangoproject.com/en/2.1/ref/request-response/#httpresponse-objects
 # for eg. return HttpResponseNotFound(...)
