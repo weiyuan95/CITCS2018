@@ -75,7 +75,7 @@ def calculate_expenses(people, expenses):
 
         amount_payable_to_each = Decimal(amount / (total_people - len(excluded_people))).quantize(0, rounding=ROUND_HALF_UP)
 
-        amt_payable = round(amount_payable_to_each, 2)
+        amt_payable = amount_payable_to_each, 2
 
         if to_pay_person in excluded_people:
             expense_dict[to_pay_person] += amount
