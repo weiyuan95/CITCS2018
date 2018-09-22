@@ -102,7 +102,7 @@ def calculate_expenses(people, expenses):
             expense_dict[min_person[0]] += max_person_amt
             result.append({"from": min_person[0],
                            "to": max_person[0],
-                           "amount": max_person_amt})
+                           "amount": round(max_person_amt, 2)})
 
             expense_dict.pop(max_person[0])
 
@@ -110,13 +110,14 @@ def calculate_expenses(people, expenses):
             expense_dict[max_person[0]] += min_person_amt
             result.append({"from": min_person[0],
                            "to": max_person[0],
-                           "amount": abs(min_person_amt)})
+                           "amount": round(abs(min_person_amt), 2)})
             expense_dict.pop(min_person[0])
 
         else:
             result.append({"from": min_person[0],
                            "to": max_person[0],
-                           "amount": max_person_amt})
+                           "amount": round(max_person_amt, 2)})
+            print(expense_dict)
             expense_dict.pop(max_person[0])
             expense_dict.pop(min_person[0])
 
