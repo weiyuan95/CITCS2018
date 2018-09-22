@@ -45,3 +45,12 @@ def tally_expenses(request):
         expenses_list = data["expenses"]
         payable_data = calculate_expenses(people_list, expenses_list)
         return JsonResponse(payable_data)
+
+
+@csrf_exempt
+def flight(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        # expenses is a list of dicts, with each dict representing an expense
+        result = MultipleRunways(data)
+        return JsonResponse(result)
