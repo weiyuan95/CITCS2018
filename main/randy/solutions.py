@@ -8,7 +8,7 @@ class Node:
 
 
 def skill_puzzle(data):
-    print(data)
+    print(type(data))
     offensive = data["boss"]["offense"]
 
     attack_list = []
