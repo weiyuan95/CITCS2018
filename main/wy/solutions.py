@@ -64,8 +64,11 @@ def calculate_expenses(people, expenses):
     # expense is a dict
     for expense in expenses:
         to_pay_person = expense["paidBy"]
-        amount = Decimal(expense["amount"]).quantize(0, rounding=ROUND_HALF_UP)
+        # amount = Decimal(expense["amount"]).quantize(0, rounding=ROUND_HALF_UP)
+        amount = expense["amount"]
+
         excluded_people = []
+
 
         if "exclude" in expense:
             excluded_people = expense["exclude"]
@@ -73,14 +76,17 @@ def calculate_expenses(people, expenses):
         if len(excluded_people) == total_people:
             continue
 
-        amount_payable_to_each = Decimal(amount / (total_people - len(excluded_people))).quantize(0, rounding=ROUND_HALF_UP)
+        # amount_payable_to_each = Decimal(amount / (total_people - len(excluded_people))).quantize(0, rounding=ROUND_HALF_UP)
+        amount_payable_to_each = amount / total_people - len(excluded_people)
 
         amt_payable = amount_payable_to_each
 
         if to_pay_person in excluded_people:
-            expense_dict[to_pay_person] += Decimal(amount).quantize(0, rounding=ROUND_HALF_UP)
+            # expense_dict[to_pay_person] += Decimal(amount).quantize(0, rounding=ROUND_HALF_UP)
+            expense_dict[to_pay_person] += amount
         else:
-            expense_dict[to_pay_person] += Decimal(amount - amt_payable).quantize(0, rounding=ROUND_HALF_UP)
+            # expense_dict[to_pay_person] += Decimal(amount - amt_payable).quantize(0, rounding=ROUND_HALF_UP)
+            expense_dict[to_pay_person] += amount - amt_payable
 
         for person in people:
             if person not in excluded_people and person != to_pay_person:
@@ -118,14 +124,10 @@ def calculate_expenses(people, expenses):
         else:
             result.append({"from": min_person[0],
                            "to": max_person[0],
-<<<<<<< HEAD
+
                            "amount": float(round(max_person_amt, 2))})
             print(expense_dict)
-            expense_dict.pop(max_person[0])
-=======
-                           "amount": max_person_amt})
 
->>>>>>> parent of a7ddd91... trying to fix tally expense
             expense_dict.pop(min_person[0])
             expense_dict.pop(max_person[0])
 
@@ -148,17 +150,17 @@ if __name__ == "__main__":
         },
         {
             "category": "Phone Bill",
-            "amount": 100,
+            "amount": 107,
             "paidBy": "Claire"
         },
         {
             "category": "Groceries",
-            "amount": 80,
+            "amount": 85,
             "paidBy": "David"
         },
         {
             "category": "Petrol",
-            "amount": 40,
+            "amount": 43,
             "paidBy": "David"
         }
     ]
