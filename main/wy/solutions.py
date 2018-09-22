@@ -102,9 +102,9 @@ def calculate_expenses(people, expenses):
 
     for from_person, to_person_dict in expense_dict.items():
         for to_person, payable in to_person_dict.items():
-
-            payable_data = {"from": from_person, "to": to_person, "amount": payable}
-            result["transactions"].append(payable_data)
+            if payable > 0:
+                payable_data = {"from": from_person, "to": to_person, "amount": payable}
+                result["transactions"].append(payable_data)
 
     return result
 
