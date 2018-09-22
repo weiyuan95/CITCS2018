@@ -1,5 +1,6 @@
 import math
 from decimal import Decimal, ROUND_HALF_UP
+
 from pprint import pprint
 
 
@@ -54,7 +55,7 @@ def is_prime(number):
 
 
 def calculate_expenses(people, expenses):
-
+    print(expenses)
     # we first create the expense dict to map each person to every other person
     expense_dict = {person: 0 for person in people}
 
@@ -65,7 +66,7 @@ def calculate_expenses(people, expenses):
     for expense in expenses:
         to_pay_person = expense["paidBy"]
         amount = Decimal(expense["amount"]).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
-        amount = int(expense["amount"])
+        # amount = expense["amount"]
 
         # print(amount)
         # amount = expense["amount"]
@@ -81,7 +82,8 @@ def calculate_expenses(people, expenses):
         if len(excluded_people) == len(people) - 1 and to_pay_person not in excluded_people:
             continue
 
-        amount_payable_to_each = Decimal(amount / (total_people - len(excluded_people))).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
+        included_num = Decimal(total_people - len(excluded_people)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
+        amount_payable_to_each = Decimal(amount / included_num).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
         # amount_payable_to_each = amount / (total_people - len(excluded_people))
 
         # amt_payable = round(amount_payable_to_each, 2)
@@ -149,33 +151,33 @@ def calculate_expenses(people, expenses):
 if __name__ == "__main__":
     data = {
     "name": "Jan Expense Report",
-    "persons": ["Alice", "Bob", "Claire", "David", "Eli", "Todmond"],
+    "persons": ["Alice", "Bob", "Claire", "David", "Eli", "Todmond", "Joelle", "Elmalleh", "ze python"],
     "expenses": [
         {
             "category": "Breakfast",
-            "amount": 60,
+            "amount": 60.104563,
             "paidBy": "Bob",
             "exclude": ["Claire","David"]
         },
         {
             "category": "Phone Bill",
-            "amount": 100,
+            "amount": 100.26173,
             "paidBy": "Claire"
         },
         {
             "category": "Groceries",
-            "amount": 80.21,
+            "amount": 80.21898221,
             "paidBy": "David"
         },
         {
             "category": "Petrol",
             "amount": 411,
             "paidBy": "David",
-            "exclude": ["Eli", "Todmond"]
+            "exclude": ["Eli", "Todmond", "Joelle"]
         },
         {
             "category": "lmao",
-            "amount": 4001,
+            "amount": 401.019231,
             "paidBy": "David",
             "exclude": ["David"]
         }
