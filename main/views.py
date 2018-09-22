@@ -90,3 +90,12 @@ def most_connected_node(request):
         # expenses is a list of dicts, with each dict representing an expense
         result = most_nodes(data["data"])
         return JsonResponse(result)
+
+
+@csrf_exempt
+def flight(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        # expenses is a list of dicts, with each dict representing an expense
+        result = AirTrafficController(data)
+        return JsonResponse(result)

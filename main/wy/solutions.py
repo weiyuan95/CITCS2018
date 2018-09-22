@@ -232,38 +232,4 @@ def most_nodes(data): #most connected node
 
 
 if __name__ == "__main__":
-    data = {
-    "name": "Jan Expense Report",
-    "persons": ["Alice", "Bob", "Claire", "David", "Eli", "Todmond", "Joelle", "Elmalleh", "ze python"],
-    "expenses": [
-        {
-            "category": "Breakfast",
-            "amount": 60.104563,
-            "paidBy": "Bob",
-            "exclude": ["Claire","David"]
-        },
-        {
-            "category": "Phone Bill",
-            "amount": 100.26173,
-            "paidBy": "Claire"
-        },
-        {
-            "category": "Groceries",
-            "amount": 80.21898221,
-            "paidBy": "David"
-        },
-        {
-            "category": "Petrol",
-            "amount": 411,
-            "paidBy": "David",
-            "exclude": ["Eli", "Todmond", "Joelle"]
-        },
-        {
-            "category": "lmao",
-            "amount": 401.019231,
-            "paidBy": "David",
-            "exclude": ["David"]
-        }
-    ]
-}
-    pprint(calculate_expenses(data["persons"], data["expenses"]))
+    pass
