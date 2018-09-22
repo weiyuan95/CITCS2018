@@ -3,7 +3,6 @@ import math
 def get_square(num):
     return num ** 2
 
-
 def prime_sum(num):
     temp = []
     used_biggest = []
@@ -48,6 +47,11 @@ def is_prime(number):
             return False
 
     return True
+
+
+def calculate_expenses(people, expenses):
+
+    expense_dict = {person: 0 for person in people}
 
 
 if __name__ == "__main__":

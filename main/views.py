@@ -30,5 +30,17 @@ def get_prime_sum(request):
     if request.method == "POST":
         data = json.loads(request.body)
         num = data["input"]
+        # print(prime_sum(num)
 
-        return JsonResponse(json.dumps(prime_sum(num)), safe=False)
+        return JsonResponse(prime_sum(num), safe=False)
+
+
+@csrf_exempt
+def tally_expenses(request):
+
+    if request.method == "POST":
+        data = json.loads(request.body)
+        people_list = data["persons"]
+        # expenses is a list of dicts, with each dict representing an expense
+        expenses_list = data["expenses"]
+        # calculate_expenses()
