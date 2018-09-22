@@ -74,17 +74,18 @@ def calculate_expenses(people, expenses):
 
         amount_payable_to_each = round(amount, 2) / (total_people - len(excluded_people))
         amt_payable = round(amount_payable_to_each, 2)
-        amt_owed = amount - amt_payable
 
         if to_pay_person in excluded_people:
             expense_dict[to_pay_person] += amount
         else:
-            expense_dict[to_pay_person] += amt_payable
+            expense_dict[to_pay_person] += amount - amt_payable
 
         for person in people:
             if person not in excluded_people and person != to_pay_person:
-                expense_dict[person] += amt_owed
+                expense_dict[person] -= amt_payable
 
+        print(expense_dict)
+    # print(expense_dict)
     result = []
     while len(expense_dict) > 0:
 
@@ -92,6 +93,10 @@ def calculate_expenses(people, expenses):
         min_person = min(expense_dict.items(), key=lambda x: x[1])
         min_person_amt = min_person[1]
         max_person_amt = max_person[1]
+        # print(result)
+        # print(min_person)
+        # print(max_person)
+        # print()
 
         if abs(min_person_amt) > max_person_amt:
             expense_dict[min_person[0]] += max_person_amt
@@ -121,30 +126,30 @@ def calculate_expenses(people, expenses):
 
 if __name__ == "__main__":
     data = {
-        "name": "Jan Expense Report",
-        "persons": ["Alice", "Bob", "Claire", "David"],
-        "expenses": [
-            {
-                "category": "Breakfast",
-                "amount": 100,
-                "paidBy": "Bob",
-                "exclude": ["Claire","David"]
-            },
-            {
-                "category": "Phone Bill",
-                "amount": 100,
-                "paidBy": "Claire"
-            },
-            {
-                "category": "Groceries",
-                "amount": 80,
-                "paidBy": "David"
-            },
-            {
-                "category": "Petrol",
-                "amount": 40,
-                "paidBy": "David"
-            }
-        ]
-    }
+    "name": "Jan Expense Report",
+    "persons": ["Alice", "Bob", "Claire", "David"],
+    "expenses": [
+        {
+            "category": "Breakfast",
+            "amount": 60,
+            "paidBy": "Bob",
+            "exclude": ["Claire","David", "Bob"]
+        },
+        {
+            "category": "Phone Bill",
+            "amount": 100,
+            "paidBy": "Claire"
+        },
+        {
+            "category": "Groceries",
+            "amount": 80,
+            "paidBy": "David"
+        },
+        {
+            "category": "Petrol",
+            "amount": 40,
+            "paidBy": "David"
+        }
+    ]
+}
     pprint(calculate_expenses(data["persons"], data["expenses"]))
