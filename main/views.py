@@ -5,6 +5,7 @@ from main.wy.solutions import *
 from main.ted.solutions import *
 from main.randy.solutions import *
 import json
+import re
 
 
 # Create your views here.
@@ -118,9 +119,10 @@ def images_gps(request):
 @csrf_exempt
 def skill_tree(request):
     if request.method == "POST":
-        data = json.loads(request.body)
-        result = skill_puzzle(data)
-        return JsonResponse(result, safe=False)
+        str_data = request.body.decode('utf-8')
+        data = json.dumps(str_data)
+        loaded_data = json.loads(data)
+        return JsonResponse(skill_puzzle(loaded_data), safe=False)
 
 
 @csrf_exempt
@@ -132,5 +134,7 @@ def get_dino_combi(request):
 
 def machine_learning_1(request):
     if request.method == "POST":
+        request.body.replace("\'", "\"")
         data = json.loads(request.body)
+
         return JsonResponse(get_unknowns(data), safe=False)
