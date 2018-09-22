@@ -101,9 +101,6 @@ def calculate_expenses(people, expenses):
                 expense_dict[person] -= amt_payable
 
     # expense_dict = {k: Decimal(v).quantize(Decimal(".01"), rounding=ROUND_HALF_UP) for k, v in expense_dict.items()}
-    print(sum(list(expense_dict.values())))
-    print("BELOW HERE")
-    print(expense_dict)
     # print(expense_dict)
     result = []
     while len(expense_dict) > 1:
@@ -151,8 +148,8 @@ def calculate_expenses(people, expenses):
         if len(expense_dict) == 1:
             break
         print(expense_dict)
-        return {"transactions": result}
-        # "amount": float(round(abs(min_person_amt)))
+    return {"transactions": result}
+    # "amount": float(round(abs(min_person_amt)))
 
 
 def min_dist_sol(dist_list):
