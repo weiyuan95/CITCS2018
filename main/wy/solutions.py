@@ -1,7 +1,10 @@
 import math
 from decimal import Decimal, ROUND_HALF_UP
+from PIL import Image
+from PIL.ExifTags import TAGS, GPSTAGS
 from pprint import pprint
 from collections import defaultdict
+import requests
 
 def get_square(num):
     return num ** 2
@@ -397,5 +400,121 @@ def sliding_puzzle(data):
     return SortGame(data)
 
 
+def get_lat_and_longs(data):
+    print(data)
+
+    def get_exif_data(image):
+        """Returns a dictionary from the exif data of an PIL Image item. Also converts the GPS Tags"""
+        exif_data = {}
+        try:
+            info = image._getexif()
+            pprint(info)
+            if info:
+                for tag, value in info.items():
+                    decoded = TAGS.get(tag, tag)
+                if decoded == "GPSInfo":
+                    gps_data = {}
+                    for t in value:
+                        sub_decoded = GPSTAGS.get(t, t)
+                        gps_data[sub_decoded] = value[t]
+
+                    exif_data[decoded] = gps_data
+                else:
+                    exif_data[decoded] = value
+
+        except:
+            pass
+
+        return exif_data
+
+    def _get_if_exist(data, key):
+        if key in data:
+            return data[key]
+
+        return None
+
+    def _convert_to_degress(value):
+        """Helper function to convert the GPS coordinates stored in the EXIF to degress in float format"""
+        d0 = value[0][0]
+        d1 = value[0][1]
+        d = float(d0) / float(d1)
+
+        m0 = value[1][0]
+        m1 = value[1][1]
+        m = float(m0) / float(m1)
+
+        s0 = value[2][0]
+        s1 = value[2][1]
+        s = float(s0) / float(s1)
+
+        return d + (m / 60.0) + (s / 3600.0)
+
+    def get_lat_lon(exif_data):
+        """Returns the latitude and longitude, if available, from the provided exif_data (obtained through get_exif_data above)"""
+        print("NEW")
+        print(exif_data)
+        # print(url)
+        print()
+        lat = None
+        long = None
+
+        try:
+
+            gps_dict = exif_data[34853]
+        except:
+            print(f"The error was caused by {exif_data}")
+            return None, None
+        lat, gps_lat_ref = _convert_to_degress(gps_dict[2]), gps_dict[1]
+        long, gps_long_ref = _convert_to_degress(gps_dict[4]), gps_dict[3]
+
+        if gps_lat_ref != "N":
+            lat = 0 - lat
+
+        if gps_long_ref != "E":
+            long = 0 - long
+
+        # if "GPSInfo" in exif_data:
+        #     gps_info = exif_data["GPSInfo"]
+        #
+        #     gps_latitude = _get_if_exist(gps_info, "GPSLatitude")
+        #     gps_latitude_ref = _get_if_exist(gps_info, 'GPSLatitudeRef')
+        #     gps_longitude = _get_if_exist(gps_info, 'GPSLongitude')
+        #     gps_longitude_ref = _get_if_exist(gps_info, 'GPSLongitudeRef')
+        #
+        #     if gps_latitude and gps_latitude_ref and gps_longitude and gps_longitude_ref:
+        #         lat = _convert_to_degress(gps_latitude)
+        #         if gps_latitude_ref != "N":
+        #             lat = 0 - lat
+        #
+        #         lon = _convert_to_degress(gps_longitude)
+        #         if gps_longitude_ref != "E":
+        #             lon = 0 - lon
+
+        return lat, long
+
+    results = []
+
+    for url_dic in data:
+        url = url_dic["path"]
+        r = requests.get(url, stream=True)
+        r.raw.decode_content = True
+        image = Image.open(r.raw)
+        exif_data = get_exif_data(image)
+
+        lat, long = get_lat_lon(exif_data)
+
+        results.append({"lat": lat, "long": long})
+
+    return results
+
+
+def dino(data):
+    print(data)
+    return 1
+
+
 if __name__ == "__main__":
-    pass
+    # data = [{'path': 'https://cis2018-photo-gps.herokuapp.com/images/c4rf.jpg'}, {'path': 'https://cis2018-photo-gps.herokuapp.com/images/7fc2.jpg'}, {'path': 'https://cis2018-photo-gps.herokuapp.com/images/l9dk.jpg'}, {'path': 'https://cis2018-photo-gps.herokuapp.com/images/ld0d.jpg'}, {'path': 'https://cis2018-photo-gps.herokuapp.com/images/0jl6.jpg'}]
+    data = [{"path": "https://cis2018-photo-gps.herokuapp.com/images/c4rf.jpg"},
+            {"path": "https://cis2018-photo-gps.herokuapp.com/images/0jl6.jpg"}]
+    print(get_lat_and_longs(data))
