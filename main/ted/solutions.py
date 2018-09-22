@@ -87,7 +87,6 @@ def Runways(flight_details, runways,reserve_time):
         addToTime(flight_details[0]["Time"],reserve_time))
 
     for i in range(1, length_list):
-        print(runway_lead_time_dict)
         # lead_time = addToTime(flight_details[i-1]["Time"], int(flight_list["Static"]["ReserveTime"]))
         plane_dets = flight_details[i]
 
