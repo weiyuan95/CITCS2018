@@ -133,4 +133,4 @@ def get_dino_combi(request):
 def machine_learning_1(request):
     if request.method == "POST":
         data = json.loads(request.body)
-        return JsonResponse(machine_learning_1(data), safe=False)
+        return JsonResponse(get_unknowns(data), safe=False)
