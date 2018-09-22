@@ -65,8 +65,8 @@ def calculate_expenses(people, expenses):
     # expense is a dict
     for expense in expenses:
         to_pay_person = expense["paidBy"]
-        amount = Decimal(expense["amount"]).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
-        # amount = expense["amount"]
+        # amount = Decimal(expense["amount"]).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
+        amount = expense["amount"]
 
         # print(amount)
         # amount = expense["amount"]
@@ -82,9 +82,10 @@ def calculate_expenses(people, expenses):
         if len(excluded_people) == len(people) - 1 and to_pay_person not in excluded_people:
             continue
 
-        included_num = Decimal(total_people - len(excluded_people)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
-        amount_payable_to_each = Decimal(amount / included_num).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
-        # amount_payable_to_each = amount / (total_people - len(excluded_people))
+        # included_num = Decimal(total_people - len(excluded_people)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
+        # included_num = total_people / excluded_people
+        # amount_payable_to_each = Decimal(amount / included_num).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
+        amount_payable_to_each = amount / (total_people - len(excluded_people))
 
         # amt_payable = round(amount_payable_to_each, 2)
         amt_payable = amount_payable_to_each
@@ -121,7 +122,9 @@ def calculate_expenses(people, expenses):
             expense_dict[min_person[0]] += max_person_amt
             result.append({"from": min_person[0],
                            "to": max_person[0],
-                           "amount": float(round(max_person_amt, 2))})
+                           # "amount": float(round(max_person_amt, 2))
+                           "amount": float(Decimal(max_person_amt).quantize(Decimal(".01"), rounding=ROUND_HALF_UP))
+                           })
 
             expense_dict.pop(max_person[0])
 
@@ -129,14 +132,18 @@ def calculate_expenses(people, expenses):
             expense_dict[max_person[0]] += min_person_amt
             result.append({"from": min_person[0],
                            "to": max_person[0],
-                           "amount": float(round(abs(min_person_amt)))})
+                           # "amount": float(round(abs(min_person_amt)))
+                           "amount": float(Decimal(abs(min_person_amt)).quantize(Decimal(".01"), rounding=ROUND_HALF_UP))
+                           })
             expense_dict.pop(min_person[0])
 
         else:
             result.append({"from": min_person[0],
                            "to": max_person[0],
 
-                           "amount": float(round(max_person_amt, 2))})
+                           # "amount": float(round(max_person_amt, 2))
+                           "amount": float(Decimal(max_person_amt).quantize(Decimal(".01"), rounding=ROUND_HALF_UP))
+                           })
             print(expense_dict)
 
             expense_dict.pop(min_person[0])
