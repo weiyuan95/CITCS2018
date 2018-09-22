@@ -117,9 +117,8 @@ def calculate_expenses(people, expenses):
             result.append({"from": min_person[0],
                            "to": max_person[0],
                            "amount": max_person_amt})
-
-            expense_dict.pop(min_person[0])
             expense_dict.pop(max_person[0])
+            expense_dict.pop(min_person[0])
 
     return {"transactions": result}
 
