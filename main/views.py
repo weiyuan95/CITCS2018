@@ -136,7 +136,6 @@ def get_dino_combi(request):
 @csrf_exempt
 def machine_learning_1(request):
     if request.method == "POST":
-        request.body.replace("\'", "\"")
         data = json.loads(request.body)
 
         return JsonResponse(get_unknowns(data), safe=False)
