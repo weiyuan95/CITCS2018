@@ -72,7 +72,7 @@ def calculate_expenses(people, expenses):
         if len(excluded_people) == total_people:
             continue
 
-        amount_payable_to_each = amount / (total_people - len(excluded_people))
+        amount_payable_to_each = round(amount, 2) / (total_people - len(excluded_people))
         amt_payable = round(amount_payable_to_each, 2)
         amt_owed = amount - amt_payable
 
@@ -123,7 +123,7 @@ if __name__ == "__main__":
         "expenses": [
             {
                 "category": "Breakfast",
-                "amount": 60,
+                "amount": 100,
                 "paidBy": "Bob",
                 "exclude": ["Claire","David"]
             },
