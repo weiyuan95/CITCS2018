@@ -5,6 +5,8 @@ from PIL.ExifTags import TAGS, GPSTAGS
 from pprint import pprint
 from collections import defaultdict
 import requests
+import statsmodels.api as sm
+import json
 
 def get_square(num):
     return num ** 2
@@ -460,8 +462,40 @@ def dino(data):
     return 1
 
 
+def get_unknowns(data):
+    print(data)
+    inputs = data["input"]
+    outputs = data["output"]
+
+    model = sm.OLS(outputs, inputs)
+    results = model.fit()
+    results.summary()
+
+
 if __name__ == "__main__":
-    # data = [{'path': 'https://cis2018-photo-gps.herokuapp.com/images/c4rf.jpg'}, {'path': 'https://cis2018-photo-gps.herokuapp.com/images/7fc2.jpg'}, {'path': 'https://cis2018-photo-gps.herokuapp.com/images/l9dk.jpg'}, {'path': 'https://cis2018-photo-gps.herokuapp.com/images/ld0d.jpg'}, {'path': 'https://cis2018-photo-gps.herokuapp.com/images/0jl6.jpg'}]
-    data = [{"path": "https://cis2018-photo-gps.herokuapp.com/images/c4rf.jpg"},
-            {"path": "https://cis2018-photo-gps.herokuapp.com/images/0jl6.jpg"}]
-    print(get_lat_and_longs(data))
+    data = {
+  "input": [
+    [1, 2, 3],
+    [2, 3, 4],
+    [2, 1, 4],
+    [5, 3, 2],
+    [2, 1, 2],
+    [1, 1, 1],
+      [3, 3, 1],
+      [5, 4, 1],
+      [8, 2, 4]
+  ],
+  "output": [
+    6,
+    9,
+    7,
+    10,
+    5,
+      3,
+      7,
+      10,
+      14
+   ],
+  "question": [3, 4, 5]
+}
+    get_unknowns(data)
