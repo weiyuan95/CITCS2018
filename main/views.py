@@ -22,3 +22,13 @@ def squares(request):
         return JsonResponse(get_square(data["input"]), safe=False)
 
     return HttpResponseBadRequest(request)
+
+
+@csrf_exempt
+def get_prime_sum(request):
+
+    if request.method == "POST":
+        data = json.loads(request.body)
+        num = data["input"]
+
+        return JsonResponse(json.dumps(prime_sum(num)), safe=False)

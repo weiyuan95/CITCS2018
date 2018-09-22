@@ -15,7 +15,7 @@ def get_evaluation():
     team_name = "5Cube"
     challenge_name = sys.argv[1]
     payload = {"team": team_name, "challenge": challenge_name}
-    root_url = "http://cis2018-coordinator-demo.herokuapp.com"
+    root_url = "http://cis2018-coordinator-sg.herokuapp.com"
 
     r = requests.post(root_url + "/api/evaluate", json=payload)
 
