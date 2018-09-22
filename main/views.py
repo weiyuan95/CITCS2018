@@ -133,6 +133,7 @@ def get_dino_combi(request):
         return JsonResponse(dino(data), safe=False)
 
 
+@csrf_exempt
 def machine_learning_1(request):
     if request.method == "POST":
         request.body.replace("\'", "\"")
