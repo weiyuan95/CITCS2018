@@ -106,7 +106,6 @@ def solve_sliding(request):
         result = sliding_puzzle(data["puzzle"])
         return JsonResponse(result)
 
-<<<<<<< HEAD
     return HttpResponseBadRequest()
 
 
@@ -117,11 +116,12 @@ def images_gps(request):
         # expenses is a list of dicts, with each dict representing an expense
         result = get_lat_and_longs(data)
         return JsonResponse(result)
-=======
+
+
 @csrf_exempt
 def skill_tree(request):
     if request.method == "POST":
         data = json.loads(request.body)
         result = skill_puzzle(data)
         return JsonResponse(result, safe=False)
->>>>>>> f4486b10c27fc1d447c4ab247e84e723c668887a
+
