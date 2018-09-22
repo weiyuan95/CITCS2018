@@ -115,7 +115,7 @@ def images_gps(request):
         data = json.loads(request.body)
         # expenses is a list of dicts, with each dict representing an expense
         result = get_lat_and_longs(data)
-        return JsonResponse(result)
+        return JsonResponse(result, safe=False)
 
 
 @csrf_exempt
