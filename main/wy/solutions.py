@@ -79,7 +79,7 @@ def calculate_expenses(people, expenses):
             continue
 
         # amount_payable_to_each = Decimal(amount / (total_people - len(excluded_people))).quantize(0, rounding=ROUND_HALF_UP)
-        amount_payable_to_each = amount / total_people - len(excluded_people)
+        amount_payable_to_each = amount / (total_people - len(excluded_people))
 
         amt_payable = round(amount_payable_to_each, 2)
 
@@ -148,21 +148,21 @@ if __name__ == "__main__":
             "category": "Breakfast",
             "amount": 60,
             "paidBy": "Bob",
-            "exclude": ["Claire","David", "Bob"]
+            "exclude": ["Claire","David"]
         },
         {
             "category": "Phone Bill",
-            "amount": 107,
+            "amount": 100,
             "paidBy": "Claire"
         },
         {
             "category": "Groceries",
-            "amount": 85,
+            "amount": 80,
             "paidBy": "David"
         },
         {
             "category": "Petrol",
-            "amount": 43,
+            "amount": 40,
             "paidBy": "David"
         }
     ]
