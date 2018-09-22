@@ -120,6 +120,7 @@ def images_gps(request):
 def skill_tree(request):
     if request.method == "POST":
         str_data = request.body.decode('utf-8')
+        print(request.body)
         data = json.dumps(str_data)
         loaded_data = json.loads(data)
         return JsonResponse(skill_puzzle(loaded_data), safe=False)
