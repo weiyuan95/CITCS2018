@@ -1,7 +1,4 @@
-from random import randrange
-
-import numpy
-import scipy
+import sympy
 
 
 class Node:
@@ -74,29 +71,37 @@ def skill_puzzle(data):
     return final_attack_list
 
 
-def machine_learning_1():
-    x = [2, 3, 4]
-    y = [9]
-    answers = []
-    unsolved = True
+def machine_learning_q1(data):
+    input = data["input"]
+    output = data["output"]
+    question = data["question"]
 
-    while unsolved:
-        one = randrange(max(x))
-        # print(one)
-        two = randrange(max(x))
-        # print(two)
-        three = randrange(max(x))
-        # print(three)
+    from ortools.linear_solver import pywraplp
 
-        sum = one*x[0] + two*x[1] + three*x[2]
-        print(sum)
+    # Instantiate a Glop solver, naming it LinearExample.
+    solver = pywraplp.Solver('LinearExample',
+                             pywraplp.Solver.GLOP_LINEAR_PROGRAMMING)
 
-        if sum == y[0]:
-            answers.append(one)
-            answers.append(two)
-            answers.append(three)
-            unsolved = False
+    # Create the two variables and let them take on any value.
+    x = solver.NumVar(-solver.infinity(), solver.infinity(), 'x')
+    y = solver.NumVar(-solver.infinity(), solver.infinity(), 'y')
+    z = solver.NumVar(-solver.infinity(), solver.infinity(), 'z')
 
-    print(answers)
+    for i in range(0, len(data["input"])):
+        # Constraint : x + y + z == output.
+        constraint = solver.Constraint(output[i], output[i])
+        constraint.SetCoefficient(x, input[i][0])
+        constraint.SetCoefficient(y, input[i][1])
+        constraint.SetCoefficient(z, input[i][2])
 
-machine_learning_1()
+    solver.Solve()
+
+
+    print('Solution:')
+    print('x = ', x.solution_value())
+    print('y = ', y.solution_value())
+    print('z = ', z.solution_value())
+
+    answer = x.solution_value() * question[0] + y.solution_value() * question[1] + z.solution_value() * question[2]
+
+    return {"answer": answer}

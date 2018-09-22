@@ -118,9 +118,9 @@ def images_gps(request):
 
 @csrf_exempt
 def skill_tree(request):
+    print(type(request))
     if request.method == "POST":
         data = json.loads(request.body)
-        print(data)
         return JsonResponse(skill_puzzle(data), safe=False)
 
 
@@ -133,7 +133,8 @@ def get_dino_combi(request):
 
 @csrf_exempt
 def machine_learning_1(request):
+    print(type(request))
     if request.method == "POST":
         data = json.loads(request.body)
-        print(data)
-        return JsonResponse(get_unknowns(data), safe=False)
+        print("======= Before entering solution!!! =======")
+        return JsonResponse(machine_learning_q1(data), safe=False)
