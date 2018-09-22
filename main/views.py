@@ -52,5 +52,5 @@ def flight(request):
     if request.method == "POST":
         data = json.loads(request.body)
         # expenses is a list of dicts, with each dict representing an expense
-        result = MultipleRunways(data)
+        result = DistressedFlights(data)
         return JsonResponse(result)
