@@ -55,15 +55,7 @@ def is_prime(number):
 def calculate_expenses(people, expenses):
 
     # we first create the expense dict to map each person to every other person
-    expense_dict = {}
-    for person in people:
-        temp = {}
-
-        for other_person in people:
-            if other_person != person:
-                temp[other_person] = 0
-
-        expense_dict[person] = temp
+    expense_dict = {person: 0 for person in people}
 
     # total people represent the total number of friends
     total_people = len(people)
@@ -79,34 +71,46 @@ def calculate_expenses(people, expenses):
 
         amount_payable_to_each = amount / (total_people - len(excluded_people))
         amt_payable = round(amount_payable_to_each, 2)
+        amt_owed = amount - amt_payable
 
-        # expense_dict format
-        # {person (from):
-        #           {
-    #                   person1 who person owes money to (to): $,
-    #                   person2 who person owes money to(to): $},
-    #                   },
-    #     }
+        expense_dict[to_pay_person] += amt_owed
 
-        for owing_person in people:
-            if owing_person not in excluded_people and owing_person != to_pay_person:
-                # check if the person that needs to be paid owes money to the person paying
-                prev_owed = expense_dict[to_pay_person][owing_person]
-                if amt_payable <= prev_owed:
-                    expense_dict[to_pay_person][owing_person] = prev_owed - amt_payable
-                else:
-                    expense_dict[owing_person][to_pay_person] = amt_payable - prev_owed
+        for person in people:
+            if person not in excluded_people and person != to_pay_person:
+                expense_dict[person] -= amt_payable
 
-    # transform data to proper format
-    result = {"transactions": []}
+    result = []
+    while len(expense_dict) > 0:
 
-    for from_person, to_person_dict in expense_dict.items():
-        for to_person, payable in to_person_dict.items():
-            if payable > 0:
-                payable_data = {"from": from_person, "to": to_person, "amount": payable}
-                result["transactions"].append(payable_data)
+        max_person = max(expense_dict.items(), key=lambda x: x[1])
+        min_person = min(expense_dict.items(), key=lambda x: x[1])
+        min_person_amt = min_person[1]
+        max_person_amt = max_person[1]
 
-    return result
+        if abs(min_person_amt) > max_person_amt:
+            expense_dict[min_person[0]] += max_person_amt
+            result.append({"from": min_person[0],
+                           "to": max_person[0],
+                           "amount": max_person_amt})
+
+            expense_dict.pop(max_person[0])
+
+        elif abs(min_person_amt) < max_person_amt:
+            expense_dict[max_person[0]] += min_person_amt
+            result.append({"from": min_person[0],
+                           "to": max_person[0],
+                           "amount": abs(min_person_amt)})
+            expense_dict.pop(min_person[0])
+
+        else:
+            result.append({"from": min_person[0],
+                           "to": max_person[0],
+                           "amount": max_person_amt})
+
+            expense_dict.pop(min_person[0])
+            expense_dict.pop(max_person[0])
+
+    return {"transactions": result}
 
 
 if __name__ == "__main__":
