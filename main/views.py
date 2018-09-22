@@ -15,7 +15,6 @@ def index(request):
 # Below is a working example for a solution.
 @csrf_exempt
 def squares(request):
-
     if request.method == "POST":
         data = json.loads(request.body)
 
@@ -26,7 +25,6 @@ def squares(request):
 
 @csrf_exempt
 def get_prime_sum(request):
-
     if request.method == "POST":
         data = json.loads(request.body)
         num = data["input"]
@@ -37,7 +35,6 @@ def get_prime_sum(request):
 
 @csrf_exempt
 def tally_expenses(request):
-
     if request.method == "POST":
         data = json.loads(request.body)
         people_list = data["persons"]
@@ -131,3 +128,9 @@ def get_dino_combi(request):
     if request.method == "POST":
         data = json.loads(request.body)
         return JsonResponse(dino(data), safe=False)
+
+
+def machine_learning_1(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        return JsonResponse(machine_learning_1(data), safe=False)

@@ -8,7 +8,7 @@ class Node:
 
 
 def skill_puzzle(data):
-    #print(data)
+    print(data)
     offensive = data["boss"]["offense"]
 
     attack_list = []
@@ -67,3 +67,6 @@ def skill_puzzle(data):
             break
 
     return final_attack_list
+
+def machine_learning_1(data):
+    return
