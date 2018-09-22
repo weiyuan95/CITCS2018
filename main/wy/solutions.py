@@ -69,6 +69,9 @@ def calculate_expenses(people, expenses):
         if "exclude" in expense:
             excluded_people = expense["exclude"]
 
+        if len(excluded_people) == total_people:
+            continue
+
         amount_payable_to_each = amount / (total_people - len(excluded_people))
         amt_payable = round(amount_payable_to_each, 2)
         amt_owed = amount - amt_payable
