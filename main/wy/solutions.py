@@ -76,11 +76,14 @@ def calculate_expenses(people, expenses):
         amt_payable = round(amount_payable_to_each, 2)
         amt_owed = amount - amt_payable
 
-        expense_dict[to_pay_person] += amt_owed
+        if to_pay_person in excluded_people:
+            expense_dict[to_pay_person] += amount
+        else:
+            expense_dict[to_pay_person] += amt_payable
 
         for person in people:
             if person not in excluded_people and person != to_pay_person:
-                expense_dict[person] -= amt_payable
+                expense_dict[person] += amt_owed
 
     result = []
     while len(expense_dict) > 0:
