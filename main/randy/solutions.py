@@ -65,4 +65,4 @@ def skill_puzzle(data):
         else:
             break
 
-    # print(final_attack_list)
+    return final_attack_list
