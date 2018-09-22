@@ -401,38 +401,6 @@ def sliding_puzzle(data):
 
 
 def get_lat_and_longs(data):
-    print(data)
-
-    def get_coords(image):
-        """Returns a dictionary from the exif data of an PIL Image item. Also converts the GPS Tags"""
-        exif_data = {}
-        try:
-            info = image._getexif()
-            pprint(info)
-            # print("here")
-            # if info:
-            #     for tag, value in info.items():
-            #         decoded = TAGS.get(tag, tag)
-            #     if decoded == "GPSInfo":
-            #         gps_data = {}
-            #         for t in value:
-            #             sub_decoded = GPSTAGS.get(t, t)
-            #             gps_data[sub_decoded] = value[t]
-            #
-            #         exif_data[decoded] = gps_data
-            #     else:
-            #         exif_data[decoded] = value
-
-        except:
-            pass
-
-        return get_lat_lon(info)
-
-    def _get_if_exist(data, key):
-        if key in data:
-            return data[key]
-
-        return None
 
     def _convert_to_degress(value):
         """Helper function to convert the GPS coordinates stored in the EXIF to degress in float format"""
@@ -451,12 +419,10 @@ def get_lat_and_longs(data):
         return d + (m / 60.0) + (s / 3600.0)
 
 
-    def get_lat_lon(exif_data):
+    def get_coords(image):
         """Returns the latitude and longitude, if available, from the provided exif_data (obtained through get_coords above)"""
-        print("NEW")
-        print(exif_data)
-        # print(url)
-        print("________")
+
+        exif_data = image._getexif()
         lat = None
         long = None
 
@@ -473,25 +439,6 @@ def get_lat_and_longs(data):
             if gps_long_ref != "E":
                 long = 0 - long
 
-            return lat, long
-
-        # if "GPSInfo" in exif_data:
-        #     gps_info = exif_data["GPSInfo"]
-        #
-        #     gps_latitude = _get_if_exist(gps_info, "GPSLatitude")
-        #     gps_latitude_ref = _get_if_exist(gps_info, 'GPSLatitudeRef')
-        #     gps_longitude = _get_if_exist(gps_info, 'GPSLongitude')
-        #     gps_longitude_ref = _get_if_exist(gps_info, 'GPSLongitudeRef')
-        #
-        #     if gps_latitude and gps_latitude_ref and gps_longitude and gps_longitude_ref:
-        #         lat = _convert_to_degress(gps_latitude)
-        #         if gps_latitude_ref != "N":
-        #             lat = 0 - lat
-        #
-        #         lon = _convert_to_degress(gps_longitude)
-        #         if gps_longitude_ref != "E":
-        #             lon = 0 - lon
-
         return lat, long
 
     results = []
@@ -501,9 +448,7 @@ def get_lat_and_longs(data):
         r = requests.get(url, stream=True)
         r.raw.decode_content = True
         image = Image.open(r.raw)
-        # exif_data = get_coords(image)
         lat, long = get_coords(image)
-        # lat, long = get_lat_lon(exif_data)
 
         results.append({"lat": lat, "long": long})
 
