@@ -64,7 +64,8 @@ def calculate_expenses(people, expenses):
     # expense is a dict
     for expense in expenses:
         to_pay_person = expense["paidBy"]
-        amount = Decimal(expense["amount"]).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
+        amount = int(Decimal(expense["amount"]).quantize(Decimal(".01"), rounding=ROUND_HALF_UP))
+        # print(amount)
         # amount = expense["amount"]
 
         excluded_people = []
@@ -146,7 +147,7 @@ def calculate_expenses(people, expenses):
 if __name__ == "__main__":
     data = {
     "name": "Jan Expense Report",
-    "persons": ["Alice", "Bob", "Claire", "David"],
+    "persons": ["Alice", "Bob", "Claire", "David", "Eli", "Todmond"],
     "expenses": [
         {
             "category": "Breakfast",
@@ -166,8 +167,15 @@ if __name__ == "__main__":
         },
         {
             "category": "Petrol",
-            "amount": 40,
-            "paidBy": "David"
+            "amount": 411.3456,
+            "paidBy": "David",
+            "exclude": ["Eli", "Todmond"]
+        },
+        {
+            "category": "lmao",
+            "amount": 4001,
+            "paidBy": "David",
+            "exclude": ["David"]
         }
     ]
 }
