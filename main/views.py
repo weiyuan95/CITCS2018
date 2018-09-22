@@ -55,6 +55,8 @@ def flight(request):
         result = DistressedFlights(data)
         return JsonResponse(result)
 
+    return HttpResponseBadRequest()
+
 
 @csrf_exempt
 def min_dist(request):
@@ -63,6 +65,8 @@ def min_dist(request):
         # expenses is a list of dicts, with each dict representing an expense
         result = min_dist_sol(data)
         return JsonResponse(result)
+
+    return HttpResponseBadRequest()
 
 
 @csrf_exempt
@@ -91,6 +95,8 @@ def most_connected_node(request):
         result = most_nodes(data["data"])
         return JsonResponse(result)
 
+    return HttpResponseBadRequest()
+
 
 @csrf_exempt
 def solve_sliding(request):
@@ -99,3 +105,23 @@ def solve_sliding(request):
         # expenses is a list of dicts, with each dict representing an expense
         result = sliding_puzzle(data["puzzle"])
         return JsonResponse(result)
+
+<<<<<<< HEAD
+    return HttpResponseBadRequest()
+
+
+@csrf_exempt
+def images_gps(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        # expenses is a list of dicts, with each dict representing an expense
+        result = get_lat_and_longs(data)
+        return JsonResponse(result)
+=======
+@csrf_exempt
+def skill_tree(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        result = skill_puzzle(data)
+        return JsonResponse(result, safe=False)
+>>>>>>> f4486b10c27fc1d447c4ab247e84e723c668887a
