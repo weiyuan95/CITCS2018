@@ -118,10 +118,16 @@ def calculate_expenses(people, expenses):
         else:
             result.append({"from": min_person[0],
                            "to": max_person[0],
+<<<<<<< HEAD
                            "amount": float(round(max_person_amt, 2))})
             print(expense_dict)
             expense_dict.pop(max_person[0])
+=======
+                           "amount": max_person_amt})
+
+>>>>>>> parent of a7ddd91... trying to fix tally expense
             expense_dict.pop(min_person[0])
+            expense_dict.pop(max_person[0])
 
         if len(expense_dict) == 1:
             break
