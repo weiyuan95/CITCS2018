@@ -96,7 +96,7 @@ def Runways(flight_details, runways,reserve_time):
 
             lead_time = runway_lead_time_dict[runway_index[k]]
 
-            if int(plane_dets["Time"]) > lead_time:
+            if int(plane_dets["Time"]) >= lead_time:
                 flight_details[i]["Runway"] = runway_index[k]
                 runway_assigned_list.append(flight_details[i])
                 lead_time = addToTime(flight_details[i]["Time"],reserve_time)
@@ -111,6 +111,7 @@ def DistressedFlights(flight_details,reserve_time):
     distressed_flight_details = []
     for flight in flight_details:
         if 'Distressed' in flight:
+            del flight['Distressed']
             distressed_flight_details.append(flight)
 
     distressed_flight_details = sorted(distressed_flight_details, key=lambda k: k['Time'])
@@ -156,4 +157,3 @@ def AirTrafficController(flight_list):
         answer = SingleRunway(flight_details, reserve_time)
 
     return answer
-
