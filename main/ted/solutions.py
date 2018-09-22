@@ -1,17 +1,3 @@
-def SingleRunway(flight_list):
-    flight_details = flight_list["Flights"]
-
-    reserve_time = flight_list["Static"]["ReserveTime"]
-
-    flight_details = sorted(flight_details, key=lambda k: k['Time'])
-
-    json_object = {
-        "Flights": flight_details
-    }
-
-    return json_object
-
-
 def convertToMinutes(seconds):
     '''takes in seconds and returns num_of_minutes'''
 
@@ -73,29 +59,20 @@ def addToTime(time, seconds):
     return str(hours_time) + str(minutes_time)
 
 
-def MultipleRunways(flight_list):
-    # sorted list of dictionaries of flights according to their time of arrival
+def SingleRunway(flight_details, reserve_time):
 
-    flight_details = sorted(flight_list["Flights"], key=lambda k: k['Time'])
+    next_lead = flight_details[0]['Time']
 
-    # list of available runways
-    runways = flight_list["Static"]["Runways"]
+    for i in range(1, len(flight_details)):
+        flight_details[i]["Time"] = addToTime(next_lead, reserve_time)
+        next_lead = addToTime(next_lead, reserve_time)
 
-    print(runways)
+    return flight_details
 
-    # reserve_time is in seconds
-    reserve_time = int(flight_list["Static"]["ReserveTime"])
-
-    # sort the list
-    minutes = convertToMinutes(reserve_time)
-
-    # get the assigned list
+def Runways(flight_details, runways,reserve_time):
     runway_assigned_list = []
-    print(flight_details)
 
     length_list = len(flight_details)
-
-    # loop through flight_details flights dict and assign runway according to flights
 
     flight_details[0]["Runway"] = runways[0]
     runway_assigned_list.append(flight_details[0])
@@ -107,10 +84,10 @@ def MultipleRunways(flight_list):
     runway_index = list(runway_lead_time_dict.keys())
 
     runway_lead_time_dict[runway_index[0]] = int(
-        addToTime(flight_details[0]["Time"], int(flight_list["Static"]["ReserveTime"])))
+        addToTime(flight_details[0]["Time"],reserve_time))
 
     for i in range(1, length_list):
-
+        print(runway_lead_time_dict)
         # lead_time = addToTime(flight_details[i-1]["Time"], int(flight_list["Static"]["ReserveTime"]))
         plane_dets = flight_details[i]
 
@@ -122,103 +99,61 @@ def MultipleRunways(flight_list):
             if int(plane_dets["Time"]) > lead_time:
                 flight_details[i]["Runway"] = runway_index[k]
                 runway_assigned_list.append(flight_details[i])
-                lead_time = addToTime(flight_details[i]["Time"], int(flight_list["Static"]["ReserveTime"]))
+                lead_time = addToTime(flight_details[i]["Time"],reserve_time)
                 runway_lead_time_dict[runway_index[k]] = int(lead_time)
                 break
 
-            else:
-                continue
+    return runway_assigned_list
 
-    json_object = {
-        "Flights": runway_assigned_list
-    }
+def DistressedFlights(flight_details,reserve_time):
 
-    return json_object
-
-
-def DistressedFlights(flight_list):
     # sorted list of dictionaries of flights according to their time of arrival
     distressed_flight_details = []
-    for flight in flight_list['Flights']:
+    for flight in flight_details:
         if 'Distressed' in flight:
             distressed_flight_details.append(flight)
 
     distressed_flight_details = sorted(distressed_flight_details, key=lambda k: k['Time'])
 
-    flight_details = sorted(flight_list["Flights"], key=lambda k: k['Time'])
-
     for plane in distressed_flight_details:
         if plane in flight_details:
             flight_details.remove(plane)
+    new_list = SingleRunway(flight_details, reserve_time)
+    return distressed_flight_details + (new_list)
 
-    # list of available runways
-    runways = flight_list["Static"]["Runways"]
 
-    # reserve_time is in seconds
+def AirTrafficController(flight_list):
+    flight_details = flight_list["Flights"]
+
     reserve_time = int(flight_list["Static"]["ReserveTime"])
 
-    # sort the list
-    minutes = convertToMinutes(reserve_time)
+    flight_details = sorted(flight_details, key=lambda k: k['Time'])
 
-    # get the assigned list
-    runway_assigned_list = []
-
-    length_list = len(flight_details)
-
-    flight_details[0]["Time"] = addToTime(distressed_flight_details[-1]["Time"],
-                                          int(flight_list["Static"]["ReserveTime"]))
-
-    runway_lead_time_dict = {}
-    for runway in runways:
-        runway_lead_time_dict[runway] = 0
-
-    runway_index = list(runway_lead_time_dict.keys())
-    #
-    runway_lead_time_dict[runway_index[0]] = int(
-        addToTime(distressed_flight_details[0]["Time"], int(flight_list["Static"]["ReserveTime"])))
-
-    for j in range(len(distressed_flight_details)):
-
-        print(runway_lead_time_dict)
-
-        for k in range(len(runway_index)):
-            # print(runway_lead_time_dict)
-
-            lead_time = runway_lead_time_dict[runway_index[k]]
-
-            checker = int(addToTime(distressed_flight_details[k]["Time"], int(flight_list["Static"]["ReserveTime"])))
-
-            if checker >= lead_time:
-                distressed_flight_details[k]["Runway"] = runway_index[k]
-                runway_assigned_list.append(distressed_flight_details[k])
-                lead_time = addToTime(distressed_flight_details[k - 1]["Time"],
-                                      int(flight_list["Static"]["ReserveTime"]))
-                runway_lead_time_dict[runway_index[k]] = int(lead_time)
-                distressed_flight_details[k]["Time"] = lead_time
+    if "Runways" in flight_list["Static"] and len(flight_list["Static"]["Runways"]) > 1 :
+        for flights in flight_details:
+            if 'Distressed' in flights:
+                flight_details = DistressedFlights(flight_details,reserve_time)
                 break
+        # print(flight_details)
+        runways = flight_list["Static"]["Runways"]
+        answer = Runways(flight_details, runways, reserve_time)
+    elif "Runways" in flight_list["Static"] and len(flight_list["Static"]["Runways"]) == 1:
 
-    for i in range(1, length_list):
-
-        # lead_time = addToTime(flight_details[i-1]["Time"], int(flight_list["Static"]["ReserveTime"]))
-        plane_dets = flight_details[i]
-
-        for k in range(len(runway_index)):
-            # print(runway_lead_time_dict)
-
-            lead_time = runway_lead_time_dict[runway_index[k]]
-
-            checker = int(addToTime(flight_details[i]["Time"], int(flight_list["Static"]["ReserveTime"])))
-
-            if checker >= lead_time:
-                flight_details[i]["Runway"] = runway_index[k]
-                runway_assigned_list.append(flight_details[i])
-                lead_time = addToTime(flight_details[i - 1]["Time"], int(flight_list["Static"]["ReserveTime"]))
-                runway_lead_time_dict[runway_index[k]] = int(lead_time)
-                flight_details[i]["Time"] = lead_time
+        for flights in flight_details:
+            if 'Distressed' in flights:
+                flight_details = DistressedFlights(flight_details,reserve_time)
                 break
+        answer = SingleRunway(flight_details, reserve_time)
+        for planes in answer:
+            planes["Runway"] = flight_list["Static"]["Runways"][0]
 
-    # print(runway_assigned_list)
-    json_object = {
-        "Flights": runway_assigned_list
-    }
-    return json_object
+    else:
+        for flights in flight_details:
+            if 'Distressed' in flights:
+                flight_details = DistressedFlights(flight_details,reserve_time)
+                break
+        # print(flight_details)
+        answer = SingleRunway(flight_details, reserve_time)
+
+    return answer
+
