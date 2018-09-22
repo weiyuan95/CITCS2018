@@ -401,6 +401,7 @@ def sliding_puzzle(data):
 
 
 def get_lat_and_longs(data):
+    print(data)
 
     def get_exif_data(image):
         """Returns a dictionary from the exif data of an PIL Image item. Also converts the GPS Tags"""
@@ -484,7 +485,9 @@ def get_lat_and_longs(data):
 
         results.append({"lat": lat, "long": long})
 
+    print(results)
     return results
+
 
 if __name__ == "__main__":
     data = [
