@@ -13,18 +13,27 @@ def skill_puzzle(data):
     attack_list = []
     offense_list = []
     points_list = []
+    attack_offense_dict = {}
+    attack_point_dict = {}
     nodes = []
+    final_attack_list = []
 
     for skill in data["skills"]:
         attack_list.append(skill["name"])
         offense_list.append(skill["offense"])
         points_list.append(skill["points"])
+        attack_point_dict.update({skill["name"]: skill["points"]})
+        attack_offense_dict.update({skill["name"]: skill["offense"]})
 
         curr_node = Node(skill["name"])
         nodes.append(curr_node)
 
         if skill["require"] in attack_list:
             nodes[attack_list.index(skill["require"])].addEdge(curr_node)
+
+    # print(attack_point_dict)
+    # sorted_attack_point_dict = [{k: attack_point_dict[k]} for k in sorted(attack_point_dict, key=attack_point_dict.get)]
+    # print(sorted_attack_point_dict)
 
     resolved = []
     seen = []
@@ -42,5 +51,18 @@ def skill_puzzle(data):
     for node in nodes:
         dep_resolve(node, resolved, seen)
 
-    for node in resolved:
-        print(node.name)
+    # for node in resolved:
+    #     print(node.name)
+
+    current_offense = 0
+
+    for attack in resolved:
+        if current_offense < offensive:
+            # print(attack.name)
+            current_offense += attack_offense_dict[attack.name]
+            # print("current offense: ", current_offense)
+            final_attack_list.append(attack.name)
+        else:
+            break
+
+    # print(final_attack_list)
