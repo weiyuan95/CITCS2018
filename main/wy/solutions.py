@@ -123,6 +123,9 @@ def calculate_expenses(people, expenses):
             expense_dict.pop(max_person[0])
             expense_dict.pop(min_person[0])
 
+        if len(expense_dict) == 1:
+            break
+
     return {"transactions": result}
 
 
