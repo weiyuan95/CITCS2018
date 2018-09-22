@@ -18,5 +18,6 @@ urlpatterns = [
     url(r"^sorting-game", main.views.solve_sliding),
     url(r'^imagesGPS', main.views.images_gps),
     url(r"^skill-tree", main.views.skill_tree),
+    url(r"^two-dinosaurs", main.views.get_dino_combi),
     path('admin/', admin.site.urls),
 ]

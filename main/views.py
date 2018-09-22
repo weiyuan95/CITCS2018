@@ -125,3 +125,8 @@ def skill_tree(request):
         result = skill_puzzle(data)
         return JsonResponse(result, safe=False)
 
+
+@csrf_exempt
+def get_dino_combi(request):
+    if request.method == "POST":
+        return JsonResponse(dino(), safe=False)
