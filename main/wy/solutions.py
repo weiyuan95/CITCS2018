@@ -94,6 +94,8 @@ def calculate_expenses(people, expenses):
             if person not in excluded_people and person != to_pay_person:
                 expense_dict[person] -= amt_payable
 
+    expense_dict = {k: Decimal(v).quantize(Decimal(".01"), rounding=ROUND_HALF_UP) for k, v in expense_dict.items()}
+
     print("BELOW HERE")
     print(expense_dict)
     # print(expense_dict)
