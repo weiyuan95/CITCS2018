@@ -89,7 +89,7 @@ def calculate_expenses(people, expenses):
         print(expense_dict)
     # print(expense_dict)
     result = []
-    while len(expense_dict) > 0:
+    while len(expense_dict) > 1:
 
         max_person = max(expense_dict.items(), key=lambda x: x[1])
         min_person = min(expense_dict.items(), key=lambda x: x[1])
