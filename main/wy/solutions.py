@@ -136,7 +136,7 @@ def calculate_expenses(people, expenses):
 
         if len(expense_dict) == 1:
             break
-    print expense_dict
+    print(expense_dict)
     return {"transactions": result}
 
 
