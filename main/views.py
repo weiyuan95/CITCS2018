@@ -119,11 +119,9 @@ def images_gps(request):
 @csrf_exempt
 def skill_tree(request):
     if request.method == "POST":
-        str_data = request.body.decode('utf-8')
-        print(request.body)
-        data = json.dumps(str_data)
-        loaded_data = json.loads(data)
-        return JsonResponse(skill_puzzle(loaded_data), safe=False)
+        data = json.loads(request.body)
+        print(data)
+        return JsonResponse(skill_puzzle(data), safe=False)
 
 
 @csrf_exempt

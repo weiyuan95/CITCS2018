@@ -8,8 +8,6 @@ class Node:
 
 
 def skill_puzzle(data):
-    print(type(data))
-    print(data)
     offensive = data["boss"]["offense"]
 
     attack_list = []
@@ -70,4 +68,6 @@ def skill_puzzle(data):
     return final_attack_list
 
 def machine_learning_1(data):
-    return
+    from pandas import DataFrame
+    from sklearn import linear_model
+
