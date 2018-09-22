@@ -1,3 +1,9 @@
+from random import randrange
+
+import numpy
+import scipy
+
+
 class Node:
     def __init__(self, name):
         self.name = name
@@ -67,7 +73,30 @@ def skill_puzzle(data):
 
     return final_attack_list
 
-def machine_learning_1(data):
-    from pandas import DataFrame
-    from sklearn import linear_model
 
+def machine_learning_1():
+    x = [2, 3, 4]
+    y = [9]
+    answers = []
+    unsolved = True
+
+    while unsolved:
+        one = randrange(max(x))
+        # print(one)
+        two = randrange(max(x))
+        # print(two)
+        three = randrange(max(x))
+        # print(three)
+
+        sum = one*x[0] + two*x[1] + three*x[2]
+        print(sum)
+
+        if sum == y[0]:
+            answers.append(one)
+            answers.append(two)
+            answers.append(three)
+            unsolved = False
+
+    print(answers)
+
+machine_learning_1()
