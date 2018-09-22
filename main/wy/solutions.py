@@ -69,17 +69,19 @@ def calculate_expenses(people, expenses):
 
         excluded_people = []
 
-
         if "exclude" in expense:
             excluded_people = expense["exclude"]
 
         if len(excluded_people) == total_people:
             continue
 
+        if len(excluded_people) == len(people) - 1 and to_pay_person not in excluded_people:
+            continue
+
         # amount_payable_to_each = Decimal(amount / (total_people - len(excluded_people))).quantize(0, rounding=ROUND_HALF_UP)
         amount_payable_to_each = amount / total_people - len(excluded_people)
 
-        amt_payable = amount_payable_to_each
+        amt_payable = round(amount_payable_to_each, 2)
 
         if to_pay_person in excluded_people:
             # expense_dict[to_pay_person] += Decimal(amount).quantize(0, rounding=ROUND_HALF_UP)
