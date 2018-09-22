@@ -99,3 +99,10 @@ def solve_sliding(request):
         # expenses is a list of dicts, with each dict representing an expense
         result = sliding_puzzle(data["puzzle"])
         return JsonResponse(result)
+
+@csrf_exempt
+def skill_tree(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        result = skill_puzzle(data)
+        return JsonResponse(result, safe=False)

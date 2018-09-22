@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^broadcaster/message-broadcast', main.views.broadcaster),
     url(r'^broadcaster/most-connected-node', main.views.most_connected_node),
     url(r"^sorting-game", main.views.solve_sliding),
+    url(r"^skill-tree", main.views.skill_tree),
     # url(r'^imagesGPS', main.views.images_gps),
     path('admin/', admin.site.urls),
 ]
