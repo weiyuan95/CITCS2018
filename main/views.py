@@ -98,4 +98,4 @@ def flight(request):
         data = json.loads(request.body)
         # expenses is a list of dicts, with each dict representing an expense
         result = AirTrafficController(data)
-        return JsonResponse(result)
+        return JsonResponse(result, safe=False)
