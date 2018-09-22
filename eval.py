@@ -23,7 +23,6 @@ def get_evaluation():
 
     r = requests.get(root_url + "/api/evaluation-run/" + run_id)
 
-    print()
     pprint(r.json())
 
 
