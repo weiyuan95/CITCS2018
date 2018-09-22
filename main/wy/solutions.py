@@ -1,4 +1,5 @@
 import math
+from decimal import Decimal, ROUND_HALF_UP
 from pprint import pprint
 
 
@@ -72,7 +73,8 @@ def calculate_expenses(people, expenses):
         if len(excluded_people) == total_people:
             continue
 
-        amount_payable_to_each = round(amount, 2) / (total_people - len(excluded_people))
+        amount_payable_to_each = Decimal(amount / (total_people - len(excluded_people))).quantize(rounding=ROUND_HALF_UP)
+
         amt_payable = round(amount_payable_to_each, 2)
 
         if to_pay_person in excluded_people:
