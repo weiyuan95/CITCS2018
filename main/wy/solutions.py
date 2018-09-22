@@ -64,8 +64,8 @@ def calculate_expenses(people, expenses):
     # expense is a dict
     for expense in expenses:
         to_pay_person = expense["paidBy"]
-        # amount = Decimal(expense["amount"]).quantize(0, rounding=ROUND_HALF_UP)
-        amount = expense["amount"]
+        amount = Decimal(expense["amount"]).quantize(Decimal(".01"), rounding=ROUND_HALF_UP)
+        # amount = expense["amount"]
 
         excluded_people = []
 
