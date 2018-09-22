@@ -92,7 +92,8 @@ def calculate_expenses(people, expenses):
             if person not in excluded_people and person != to_pay_person:
                 expense_dict[person] -= amt_payable
 
-        print(expense_dict)
+    print("BELOW HERE")
+    print(expense_dict)
     # print(expense_dict)
     result = []
     while len(expense_dict) > 1:
@@ -133,7 +134,6 @@ def calculate_expenses(people, expenses):
 
         if len(expense_dict) == 1:
             break
-    print(expense_dict)
     return {"transactions": result}
 
 
