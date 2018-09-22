@@ -508,7 +508,8 @@ def get_lat_and_longs(data):
     return results
 
 
-def dino():
+def dino(data):
+    print(data)
     return 1
 
 
