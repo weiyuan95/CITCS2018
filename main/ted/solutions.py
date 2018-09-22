@@ -123,9 +123,6 @@ def DistressedFlights(flight_details,reserve_time):
 
 
 def AirTrafficController(flight_list):
-
-    print(flight_list)
-
     flight_details = flight_list["Flights"]
 
     reserve_time = int(flight_list["Static"]["ReserveTime"])

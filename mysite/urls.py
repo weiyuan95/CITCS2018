@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^$', main.views.index, name='index'),
     url(r"^square$", main.views.squares, name="squares"),
     url(r"^prime-sum$", main.views.get_prime_sum, name="prime-sum"),
-    url(r"^flights$", main.views.flight, name="flights"),
+    url(r"^airtrafficcontroller", main.views.flight, name="flights"),
     url(r"^tally-expense$", main.views.tally_expenses, name="tallyexpenses"),
     url(r'^customers-and-hotel/minimum-distance', main.views.min_dist, name='lmao'),
     url(r'^customers-and-hotel/minimum-camps', main.views.min_camps),
