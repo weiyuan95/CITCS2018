@@ -11,5 +11,10 @@ urlpatterns = [
     url(r"^prime-sum$", main.views.get_prime_sum, name="prime-sum"),
     url(r"^flights$", main.views.flight, name="flights"),
     url(r"^tally-expense$", main.views.tally_expenses, name="tallyexpenses"),
+    url(r'^customers-and-hotel/minimum-distance', main.views.min_dist, name='lmao'),
+    url(r'^customers-and-hotel/minimum-camps', main.views.min_camps),
+    url(r'^broadcaster/message-broadcast', main.views.broadcaster),
+    url(r'^broadcaster/most-connected-node', main.views.most_connected_node),
+    # url(r'^imagesGPS', main.views.images_gps),
     path('admin/', admin.site.urls),
 ]

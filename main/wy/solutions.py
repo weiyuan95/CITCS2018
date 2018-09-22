@@ -1,8 +1,7 @@
 import math
 from decimal import Decimal, ROUND_HALF_UP
-
 from pprint import pprint
-
+from collections import defaultdict
 
 def get_square(num):
     return num ** 2
@@ -132,8 +131,8 @@ def calculate_expenses(people, expenses):
             expense_dict[max_person[0]] += min_person_amt
             result.append({"from": min_person[0],
                            "to": max_person[0],
-                           # "amount": float(round(abs(min_person_amt)))
-                           "amount": float(Decimal(abs(min_person_amt)).quantize(Decimal(".01"), rounding=ROUND_HALF_UP))
+                           "amount": float(
+                               Decimal(abs(min_person_amt)).quantize(Decimal(".01"), rounding=ROUND_HALF_UP))
                            })
             expense_dict.pop(min_person[0])
 
@@ -151,8 +150,85 @@ def calculate_expenses(people, expenses):
 
         if len(expense_dict) == 1:
             break
-    print(expense_dict)
-    return {"transactions": result}
+        print(expense_dict)
+        return {"transactions": result}
+        # "amount": float(round(abs(min_person_amt)))
+
+
+def min_dist_sol(dist_list):
+    d = sorted(dist_list)
+    pair = min(zip(d, d[1:]), key=lambda x: x[1] - x[0])
+
+    return {"answer": pair[1] - pair[0]}
+
+
+def min_camps_sol(pos_dist_list):
+    movements = {k: (d['pos'] - d['distance'] if d['pos'] - d['distance'] > 0 else 0,
+                     d['pos'] + d['distance']) for k, d in enumerate(pos_dist_list)}
+
+    roms = sorted(movements.items(), key=lambda x: x[0])
+
+    intercepts = []
+    common = None
+
+    for pos, rom in roms:
+        if common is None:
+            common = rom[1]
+        else:
+            if rom[0] <= common <= rom[1]:
+                continue
+            else:
+                intercepts.append(common)
+                common = rom[1]
+
+    intercepts.append(common)
+
+    return {"answer": len(set(intercepts))}
+
+
+def Broadcaster(data): #broadcaster
+    master = []
+    slave = []
+
+    for item in data:
+        master.append(item[0])
+        slave.append(item[-1])
+
+    master = set(master)
+    slave = set(slave)
+
+    realmaster = master.difference(slave)
+    return  {
+        "result" : list(realmaster)
+    }
+
+
+def most_nodes(data): #most connected node
+    '''
+    {
+        "data" : ['U->V', 'J->L', 'C->G', 'T->Y', 'K->Q', 'E->M', 'F->O', 'N->Z', 'K->W', 'E->T', 'P->D', 'B->W', 'H->A', 'X->R', 'X->S', 'K->I']
+    }
+    '''
+
+    d = defaultdict(set)
+
+    for conn in data:
+        master, slave = conn.split('->')
+
+        d[master].add(slave)
+
+        for node, connections in d.items():
+            if master == node:
+                continue
+            if master in connections:
+                d[node].add(slave)
+            if slave in connections:
+                d[node].add(master)
+
+    # pprint(d)
+    return {
+        "result": sorted(d.items(), key=lambda x: len(x[1]))[-1][0]
+    }
 
 
 if __name__ == "__main__":

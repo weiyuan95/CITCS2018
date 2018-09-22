@@ -54,3 +54,39 @@ def flight(request):
         # expenses is a list of dicts, with each dict representing an expense
         result = DistressedFlights(data)
         return JsonResponse(result)
+
+
+@csrf_exempt
+def min_dist(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        # expenses is a list of dicts, with each dict representing an expense
+        result = min_dist_sol(data)
+        return JsonResponse(result)
+
+
+@csrf_exempt
+def min_camps(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        # expenses is a list of dicts, with each dict representing an expense
+        result = min_camps_sol(data)
+        return JsonResponse(result)
+
+
+@csrf_exempt
+def broadcaster(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        # expenses is a list of dicts, with each dict representing an expense
+        result = Broadcaster(data["data"])
+        return JsonResponse(result)
+
+
+@csrf_exempt
+def most_connected_node(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        # expenses is a list of dicts, with each dict representing an expense
+        result = most_nodes(data["data"])
+        return JsonResponse(result)
