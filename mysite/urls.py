@@ -20,5 +20,6 @@ urlpatterns = [
     url(r"^skill-tree", main.views.skill_tree),
     url(r"^two-dinosaurs", main.views.get_dino_combi),
     url(r"^machine-learning/question-1", main.views.machine_learning_1),
+    url(r"^machine-learning/question-2", main.views.machine_learning_2),
     path('admin/', admin.site.urls),
 ]

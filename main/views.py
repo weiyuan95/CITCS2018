@@ -138,3 +138,12 @@ def machine_learning_1(request):
         data = json.loads(request.body)
         print("======= Before entering solution!!! =======")
         return JsonResponse(machine_learning_q1(data), safe=False)
+
+
+@csrf_exempt
+def machine_learning_2(request):
+    print(type(request))
+    if request.method == "POST":
+        data = json.loads(request.body)
+        print("======= Before entering solution!!! =======")
+        return JsonResponse(predict_images(data), safe=False)
