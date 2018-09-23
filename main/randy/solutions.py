@@ -149,14 +149,12 @@ def train_model():
     print(model.evaluate(x_test, y_test))
 
 
-def predict_images(data):
+def predict_images(data, heroku=True):
     images = data["question"]
     result = []
-    import os
-    print(os.getcwd())
-    print(__file__)
+    model_fp = "/app/main/randy/image_model.h5" if heroku else "image_model.h5"
     # load the model from the .h5 file
-    model = load_model("/app/main/randy/image_model.h5")
+    model = load_model(model_fp)
 
     for image in images:
         # get np array of image
