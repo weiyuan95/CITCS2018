@@ -156,7 +156,7 @@ def predict_images(data):
     print(os.getcwd())
     print(__file__)
     # load the model from the .h5 file
-    model = load_model("./image_model.h5")
+    model = load_model("/app/main/randy/image_model.h5")
 
     for image in images:
         # get np array of image
