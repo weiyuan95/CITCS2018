@@ -108,66 +108,20 @@ def machine_learning_q1(data):
     return {"answer": answer}
 
 
-def train_model():
+def machine_learning_q2():
+    import tensorflow as tf
     (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
-    # import matplotlib.pyplot as plt
-    # image_index = 7777  # You may select anything up to 60,000
-    # print(y_train[image_index])  # The label is 8
-    # plt.imshow(x_train[image_index], cmap='Greys')
-    # Reshaping the array to 4-dims so that it can work with the Keras API
-    x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
-    x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
-    input_shape = (28, 28, 1)
-    # Making sure that the values are float so that we can get decimal points after division
-    x_train = x_train.astype('float32')
-    x_test = x_test.astype('float32')
-    # Normalizing the RGB codes by dividing it to the max RGB value.
-    x_train /= 255
-    x_test /= 255
-    print('x_train shape:', x_train.shape)
-    print('Number of images in x_train', x_train.shape[0])
-    print('Number of images in x_test', x_test.shape[0])
+def dino_problem(data):
+    # print("Types of food", data["number_of_types_of_food"])
+    food_size = data["number_of_types_of_food"]
 
-    # Importing the required Keras modules containing model and layers
-    from keras.models import Sequential
-    from keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
-    # Creating a Sequential Model and adding the layers
-    model = Sequential()
-    model.add(Conv2D(28, kernel_size=(3, 3), input_shape=input_shape))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Flatten())  # Flattening the 2D arrays for fully connected layers
-    model.add(Dense(128, activation=tf.nn.relu))
-    model.add(Dropout(0.2))
-    model.add(Dense(10, activation=tf.nn.softmax))
+    raphael_list = data["calories_for_each_type_for_raphael"]
 
     model.compile(optimizer='adam',
                   loss='sparse_categorical_crossentropy',
                   metrics=['accuracy'])
     model.fit(x=x_train, y=y_train, epochs=10)
-    model.save("image_model.h5")
-    print(model.evaluate(x_test, y_test))
 
-
-def predict_images(data):
-    images = data["question"]
-    result = []
-    # load the model from the .h5 file
-    model = load_model("./image_model.h5")
-
-    for image in images:
-        # get np array of image
-        np_image = np.asarray(image)
-        # the image is 28 x 28 pixels, so reshape the array
-        pred = model.predict(np_image.reshape(1, 28, 28, 1))
-
-        result.append(pred.argmax())
-
-    return {"answer": result}
-
-
-if __name__ == "__main__":
-    # (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
-    data = {"question":[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,101,123,170,235,261,158,97,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,155,226,278,263,275,217,266,206,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,167,241,275,218,187,127,192,220,244,113,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,53,255,225,214,31,12,0,7,180,268,153,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,235,219,23,0,0,0,105,250,268,57,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,28,18,0,0,0,0,232,285,242,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,122,244,261,173,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,87,259,263,236,70,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,142,234,254,136,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,184,261,278,164,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,252,265,205,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,177,260,261,134,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,67,282,289,214,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,19,197,234,253,146,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,124,262,219,180,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,269,234,259,26,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,253,268,46,21,23,21,19,4,0,6,20,22,36,153,150,138,160,11,0,0,0,0,0,0,0,0,0,230,260,261,284,280,269,233,285,181,162,153,255,258,241,271,278,262,278,119,0,0,0,0,0,0,0,0,0,154,290,241,231,273,278,245,289,271,248,236,235,215,249,226,157,104,109,53,0,0,0,0,0,0,0,0,0,0,107,137,123,137,167,290,272,243,146,138,134,36,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]}
-    print(predict_images(data))
-
+    model.evaluate(x_test, y_test)
+machine_learning_q2()
