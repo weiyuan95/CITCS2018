@@ -24,8 +24,11 @@ pytest = "*"
 scipy = "*"
 sympy = "*"
 ortools = "*"
+matplotlib = "*"
+tensorflow = {file = "https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.10.1-py3-none-any.whl"}
+keras = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.6"
