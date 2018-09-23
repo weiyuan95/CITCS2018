@@ -164,7 +164,7 @@ def predict_images(data):
         # the image is 28 x 28 pixels, so reshape the array
         pred = model.predict(np_image.reshape(1, 28, 28, 1))
 
-        result.append(pred.argmax())
+        result.append(int(pred.argmax()))
 
     return {"answer": result}
 
